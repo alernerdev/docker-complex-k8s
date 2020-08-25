@@ -1,0 +1,23 @@
+# regular kubernetes volume is associated with the life of the pod
+# if container within the pod crashes, a new container is launched and
+# the data is still there within the pod.  but if the whole pod crashes,
+# the db data is gone !
+
+# a persistent volume is outside the pod.
+
+# a persistent volume claim is an advertisement of the storage 
+# I can ask for. This is dynamically allocated/cofigured
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: database-persistent-volume-claim
+spec:
+    accessModes:
+# can be used by a single node
+        - ReadWriteOnce
+#ReadOnlyMany can be read by multiple nodes. ReadWriteMany - can be read
+# and written by many nodes
+    resources:
+        requests:
+            storage: 2Gi

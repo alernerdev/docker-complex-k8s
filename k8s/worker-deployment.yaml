@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+# names the object
+    name: worker-deployment
+spec:
+# number of pods this deployment is running
+    replicas: 1
+# master or some program in master creates the pod and we select it
+    selector:
+        matchLabels:
+            component: worker
+# template applies to every pod this deployment runs/monitors
+    template:
+        metadata:
+            labels:
+                component: worker
+        spec:
+            containers:
+                - name: worker
+                  image: redridinghood/docker-complex-fib-worker
+                  env:
+                    - name: REDIS_HOST
+                      value: redis-cluster-ip-service
+                    - name: REDIS_PORT
+                      value: '6379'
+
+# there is no need for a matching Service file because no
+# requests go into the worker. Sernvvice is only needed if there are 
+# incoming requests
