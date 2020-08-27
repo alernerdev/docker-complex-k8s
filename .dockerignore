@@ -1,0 +1,3 @@
+# not sure if I am using this correctly, but i dont want .git to go the image
+.git
+.gitignore
