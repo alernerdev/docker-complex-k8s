@@ -8,5 +8,12 @@ before_install:
     - curl https://sdk.cloud.google.com | bash > /dev/null;
     - source $HOME/google-cloud-sdk/path.bash.inc
     - gcloud components update kubectl
-# authorization. Service account with admin access to kubernetes engine should have existed
+# authorization. Service account with admin access to kubernetes engine was already decrypted
+# should have been decrypted
     - gcloud auth activate-service-account --key-file service-account.json
+# project id is the project name used here
+    - gcloud config set project centering-study-287723
+    - gloud config set compute/zone northamerica-northeast1-c 	
+    - gcloud container clusters get-credentials multi-cluster
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t redridinghood/reac-test -f ./client/Dockerfile.dev
