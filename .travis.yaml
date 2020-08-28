@@ -1,6 +1,14 @@
 sudo: required
 services:
     - docker
+
+env:
+    global:
+# get repo atomic number to be used as version number
+        - GIT_SHA=${git rev-parse HEAD}
+# turn off any google cloud sdk prompts
+        - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
 before_install:
 # this comes from encrypting service-account.json file
     - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
@@ -11,9 +19,23 @@ before_install:
 # authorization. Service account with admin access to kubernetes engine was already decrypted
 # should have been decrypted
     - gcloud auth activate-service-account --key-file service-account.json
+
+# these 3 gcloud commands need to run in google console as well
 # project id is the project name used here
     - gcloud config set project centering-study-287723
-    - gloud config set compute/zone northamerica-northeast1-c 	
+    - gcloud config set compute/zone northamerica-northeast1-c 	
     - gcloud container clusters get-credentials multi-cluster
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker build -t redridinghood/reac-test -f ./client/Dockerfile.dev
+# we dont care about this test container
+    - docker build -t redridinghood/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+# the flag is added so that the tests dont hang
+    - docker run -e CI=true redridinghood/react-test npm test
+
+deploy:
+#travis does not have a kubernetes provider, need to do it ourselves
+    provider: script
+    script: bash ./deploy.sh
+    on:
+        branch: master
