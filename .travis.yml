@@ -5,7 +5,7 @@ services:
 env:
     global:
 # get repo atomic number to be used as version number
-        - GIT_SHA=${git rev-parse HEAD}
+        - GIT_SHA=$(git rev-parse HEAD)
 # turn off any google cloud sdk prompts
         - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
