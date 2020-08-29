@@ -9,8 +9,8 @@ echo "GIT_SHA is " $GIT_SHA
 
 # tag images with 2 tags
 docker build -t redridinghood/docker-complex-fib-client:latest -t redridinghood/docker-complex-fib-client:$GIT_SHA -f ./client/Dockerfile ./client
-docker build -t redridinghood/docker-complex-fib-worker:latest -t redridinghood/docker-complex-fib-worker:$GIT_SHA -f ./server/Dockerfile ./worker
-docker build -t redridinghood/docker-complex-fib-server:latest -t redridinghood/docker-complex-fib-server:$GIT_SHA -f ./client/Dockerfile ./server
+docker build -t redridinghood/docker-complex-fib-worker:latest -t redridinghood/docker-complex-fib-worker:$GIT_SHA -f ./worker/Dockerfile ./worker
+docker build -t redridinghood/docker-complex-fib-server:latest -t redridinghood/docker-complex-fib-server:$GIT_SHA -f ./server/Dockerfile ./server
 
 # push it up to dockerhub
 docker push redridinghood/docker-complex-fib-client:latest
