@@ -4,6 +4,9 @@
 # git rev-parse HEAD  -- gives you unique atomic number of the snapshot
 # git checkout atomicnumber -- gives you the exact source code snapshot thats been deployed
 
+echo "About to run deploy.sh"
+echo "GIT_SHA is " $GIT_SHA
+
 # tag images with 2 tags
 docker build -t redridinghood/docker-complex-fib-client:latest -t redridinghood/docker-complex-fib-client:$GIT_SHA -f ./client/Dockerfile ./client
 docker build -t redridinghood/docker-complex-fib-worker:latest -t redridinghood/docker-complex-fib-worker:$GIT_SHA -f ./server/Dockerfile ./worker
