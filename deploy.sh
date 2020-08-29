@@ -16,7 +16,7 @@ docker build -t redridinghood/docker-complex-fib-server:latest -t redridinghood/
 docker push redridinghood/docker-complex-fib-client:latest
 docker push redridinghood/docker-complex-fib-server:latest
 docker push redridinghood/docker-complex-fib-worker:latest
-docker push edridinghood/docker-complex-fib-client:$GIT_SHA
+docker push redridinghood/docker-complex-fib-client:$GIT_SHA
 docker push redridinghood/docker-complex-fib-worker:$GIT_SHA
 docker push redridinghood/docker-complex-fib-server:$GIT_SHA
 
